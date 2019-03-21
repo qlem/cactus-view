@@ -1,16 +1,18 @@
 <template>
     <div id="app">
+        <div class="header">
+            <h1>Welcome to Cactus</h1>
+        </div>
         <Nav class="nav"/>
-        <SignIn v-if="!isAuth" class="sign-in"/>
-        <div v-else @click="logOut">logout</div>
-        <div>{{ isAuth }}</div>
-        <div>{{ authStatus }}</div>
+        <!-- <div>{{ authStatus }}</div> -->
         <router-view class="content"/>
+        <SignIn class="sign-in"/>
     </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { http } from "@/http/http";
 import Nav from '@/components/Navigation.vue'
 import SignIn from '@/components/SignIn.vue'
 
@@ -21,20 +23,20 @@ import SignIn from '@/components/SignIn.vue'
     }
 })
 export default class App extends Vue {
-    get isAuth() {
-        return this.$store.getters.isAuth
-    }
+
+    // TODO remove computed property
     get authStatus() {
         return this.$store.getters.authStatus
     }
-    async logOut() {
-        try {
-            this.$router.push('/');
-            await this.$store.dispatch('authLogout')
-        } catch (e) {
-            console.error('Error detected while logout');
-            console.error(e.stack)
-        }
+
+    created() {
+        http.instance.interceptors.response.use(undefined, async (err: any) => {
+            if (err.response.status === 401) {
+                await this.$store.dispatch('authLogout');
+                this.$router.push('/');
+            }
+            return Promise.reject(err);
+        })
     }
 }
 </script>
@@ -52,9 +54,34 @@ body
     -moz-osx-font-smoothing grayscale
     background #ffbf1d
     position fixed
+    top 0
+    left 0
     width 100%
     height 100%
 
+.header
+    position absolute
+    height 100px
+    h1
+        margin-left 40px
+
+
+.nav
+    position absolute
+    top 100px
+    width 200px
+    height calc(100% - 100px)
+
 .content
-    height 100%
+    position absolute
+    top 100px
+    left 200px
+    height calc(100% - 100px)
+    width calc(100% - 200px)
+    overflow auto
+
+.sign-in
+    position absolute
+    top 0
+    right 0
 </style>

@@ -18,7 +18,7 @@ export default new Vuex.Store({
             state.status = 'loading'
         },
         AUTH_SUCCESS: (state, token) => {
-            state.status = 'success';
+            state.status = 'connected';
             state.token = token
         },
         AUTH_ERROR: state => {
@@ -26,6 +26,7 @@ export default new Vuex.Store({
         },
         AUTH_LOGOUT: state => {
             state.token = '';
+            state.status = 'disconnected'
         }
     },
     actions: {
@@ -35,8 +36,10 @@ export default new Vuex.Store({
                 const response = await http.instance.post('/identification', user);
                 const token = response.data.token;
                 http.setCookie(token, 10);
+                http.instance.defaults.headers.common['token'] = token;
                 context.commit('AUTH_SUCCESS', token);
             } catch (e) {
+                console.error(e);
                 context.commit('AUTH_ERROR', e);
                 // http.deleteCookie()
             }
@@ -44,6 +47,7 @@ export default new Vuex.Store({
         authLogout: context => {
             try {
                 context.commit('AUTH_LOGOUT');
+                delete http.instance.defaults.headers.common['token'];
                 http.deleteCookie()
             } catch (e) {
                 // NOTHING BECAUSE I LOVE THE VOID

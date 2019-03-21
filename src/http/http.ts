@@ -3,23 +3,14 @@ import axios from 'axios'
 class Http {
 
     private cookieName: string = 'cactusToken=';
-    readonly _instance: any;
-    private _adminInstance: any;
+    readonly instance: any;
 
     constructor() {
         console.log('new http instance');
-        this._instance = axios.create({
+        this.instance = axios.create({
             baseURL: 'http://localhost:3000',
             timeout: 1000,
         });
-    }
-
-    get adminInstance(): any {
-        return this._adminInstance
-    }
-
-    get instance(): any {
-        return this._instance
     }
 
     public setCookie(token: string, days: number) {
@@ -27,23 +18,16 @@ class Http {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         const exp: string = 'expires=' + date.toUTCString();
         document.cookie = this.cookieName + token + ';' + exp;
-        this._adminInstance = axios.create({
-            baseURL: 'http://localhost:3000',
-            timeout: 1000,
-            headers: {
-                token: this.getToken()
-            }
-        });
     }
 
     public getToken(): string {
         const decodedCookie: string = decodeURIComponent(document.cookie);
         const cookies: string[] = decodedCookie.split(';');
         for (let cookie of cookies) {
-            while (cookie.charAt(0) == ' ') {
+            while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1)
             }
-            if (cookie.indexOf(this.cookieName) == 0) {
+            if (cookie.indexOf(this.cookieName) === 0) {
                 return cookie.substring(this.cookieName.length, cookie.length)
             }
         }

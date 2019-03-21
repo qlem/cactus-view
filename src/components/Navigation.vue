@@ -1,8 +1,8 @@
 <template>
-    <div class="nav">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-        <router-link v-if="isAuth" to="/admin">Admin</router-link>
+    <div class="main">
+        <router-link class="link" to="/">Home</router-link>
+        <router-link class="link" to="/about">About</router-link>
+        <router-link class="link" v-if="isAuth" to="/admin">Admin</router-link>
     </div>
 </template>
 
@@ -18,6 +18,23 @@ export default class Navigation extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.nav
+.main
     background #b23cff
+    display flex
+    flex-direction column
+
+.link
+    color: white
+    cursor pointer
+    height 55px
+    min-height 55px
+    display flex
+    justify-content center
+    align-items center
+    text-decoration none
+    &.router-link-exact-active
+        background-color: #4CAF50
+
+.link:hover:not(.router-link-exact-active)
+    background-color: #111
 </style>
