@@ -6,7 +6,6 @@ class Http {
     readonly instance: any;
 
     constructor() {
-        console.log('new http instance');
         this.instance = axios.create({
             baseURL: 'http://localhost:3000',
             timeout: 1000,

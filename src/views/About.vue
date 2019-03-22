@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <h2>About View</h2>
+        <h2>About</h2>
     </div>
 </template>
 
@@ -12,6 +12,5 @@ export default class About extends Vue {}
 </script>
 
 <style scoped lang="stylus">
-.main
-    background #44bcff
+
 </style>

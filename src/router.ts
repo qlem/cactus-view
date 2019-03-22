@@ -29,6 +29,7 @@ export default new Router({
         {
             path: '/admin',
             name: 'admin',
+            props: true,
             component: () => import(/* webpackChunkName: "cactus" */ './views/Admin.vue'),
             beforeEnter: ifAuth,
         }

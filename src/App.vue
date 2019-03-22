@@ -1,10 +1,7 @@
 <template>
     <div id="app">
-        <div class="header">
-            <h1>Welcome to Cactus</h1>
-        </div>
+        <div class="header">Welcome to Cactus</div>
         <Nav class="nav"/>
-        <!-- <div>{{ authStatus }}</div> -->
         <router-view class="content"/>
         <SignIn class="sign-in"/>
     </div>
@@ -23,11 +20,6 @@ import SignIn from '@/components/SignIn.vue'
     }
 })
 export default class App extends Vue {
-
-    // TODO remove computed property
-    get authStatus() {
-        return this.$store.getters.authStatus
-    }
 
     created() {
         http.instance.interceptors.response.use(undefined, async (err: any) => {
@@ -52,7 +44,6 @@ body
     font-family 'Avenir', Helvetica, Arial, sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
-    background #ffbf1d
     position fixed
     top 0
     left 0
@@ -60,11 +51,16 @@ body
     height 100%
 
 .header
+    background #494949
     position absolute
-    height 100px
-    h1
-        margin-left 40px
-
+    height 65px
+    width 100%
+    color #d3d3d3
+    z-index 1
+    border-bottom: 1px solid #000000
+    padding 35px 0 0 40px
+    font-size 2em
+    font-weight bold
 
 .nav
     position absolute
@@ -73,14 +69,17 @@ body
     height calc(100% - 100px)
 
 .content
+    background #dbdbdb
     position absolute
     top 100px
     left 200px
     height calc(100% - 100px)
-    width calc(100% - 200px)
+    width calc(100% - 280px)
     overflow auto
+    padding 0 40px 0 40px
 
 .sign-in
+    z-index 2
     position absolute
     top 0
     right 0

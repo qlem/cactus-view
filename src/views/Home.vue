@@ -1,15 +1,22 @@
 <template>
-    <div class="home">
-        <h2 class="main-title">Home View</h2>
-        <div v-for="post in posts" :key="post._id" class="cactus">
+    <div class="main">
+        <h2 class="main-title">Home</h2>
+        <div class="cactus" v-for="post in posts" :key="post._id">
+            <div class="cactus-admin">
+                <div v-if="isAuth" class="admin-button edit-button" @click="toEditCactus(post)">
+                    <img src="../assets/edit.png" alt="edit">
+                </div>
+                <div v-if="isAuth" class="admin-button" @click="deleteCactus(post._id)">
+                    <img src="../assets/trash.png" alt="delete">
+                </div>
+            </div>
             <div class="cactus-title">{{ post.title }}</div>
-            <div class="cactus-date">{{ post.date }}</div>
-            <div class="cactus-author">{{ post.author }}</div>
+            <div class="cactus-author">by {{ post.author }}, {{ post.date }}</div>
             <div class="cactus-body">{{ post.body }}</div>
             <div class="cactus-last-edited" v-if="post.lastEdited">last edited by {{ post.lastEdited.author }}
                 ({{ post.lastEdited.date }})</div>
-            <div v-if="isAuth" class="delete-button" @click="deleteCactus(post._id)">delete</div>
         </div>
+        <div class="margin-bottom"></div>
     </div>
 </template>
 
@@ -24,10 +31,10 @@ export default class Home extends Vue {
     get isAuth() {
         return this.$store.getters.isAuth
     }
-    private async created() {
+    async created() {
         await this.getCactus()
     }
-    private async getCactus() {
+    async getCactus() {
         try {
             const response = await http.instance.get('/blog');
             for (let post of response.data) {
@@ -40,15 +47,15 @@ export default class Home extends Vue {
             }
             this.posts = response.data;
         } catch (e) {
-            console.error('Cannot get posts');
+            console.error('Cannot get cactus');
             console.error(e)
         }
     }
-    private async deleteCactus(postId: string) {
+    async deleteCactus(cactusId: string) {
         try {
             await http.instance.delete('/blog', {
                 params: {
-                    postId: postId
+                    postId: cactusId
                 }
             });
             await this.getCactus()
@@ -57,20 +64,58 @@ export default class Home extends Vue {
             console.error(e);
         }
     }
+    async toEditCactus(cactus: any) {
+        this.$router.push({name: 'admin', params: {
+            cactusId: cactus._id,
+            pTitle: cactus.title,
+            pBody: cactus.body
+        }})
+    }
 }
 </script>
 
 <style scoped lang="stylus">
-.home
-    background #ff494e
-
-.main-title
-    margin-left 40px
-
 .cactus
-    margin 0 40px 20px 40px
+    position relative
+    background white
+    width calc(100% - 20px)
+    margin-bottom 20px
+    padding 10px
+    border-radius 2px
+    box-shadow 3px 3px 6px 0 rgba(0, 0, 0, 0.2), -3px -3px 6px 0 rgba(0, 0, 0, 0.2)
+
+.cactus-admin
+    position absolute
+    top 0
+    right 0
+    display flex
+
+.admin-button
+    margin 10px 10px 0 0
+    img
+        width 15px
+        height 15px
+    &:hover
+        cursor pointer
 
 .cactus-title
+    flex-grow 1
     font-weight bold
-    font-size 1.2em
+    color #4CAF50
+
+.cactus-author
+    font-size 0.7em
+
+.cactus-body
+    margin-top 10px
+    position relative
+
+.cactus-last-edited
+    font-style italic
+    font-size 0.6em
+    text-align right
+    margin-top 10px
+
+.margin-bottom
+    height 20px
 </style>

@@ -19,7 +19,7 @@ export default class Navigation extends Vue {
 
 <style lang="stylus" scoped>
 .main
-    background #b23cff
+    background #494949
     display flex
     flex-direction column
 
