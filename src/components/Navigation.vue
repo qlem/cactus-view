@@ -17,7 +17,7 @@ export default class Navigation extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style scoped lang="stylus">
 .main
     background #494949
     display flex

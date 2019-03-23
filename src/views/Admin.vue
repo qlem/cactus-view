@@ -1,23 +1,23 @@
 <template>
-    <div class="main">
+    <div>
         <h2>Admin</h2>
-        <h3 v-if="cactusId">Edit cactus</h3>
-        <h3 v-else>Add a new cactus</h3>
         <div v-if="cactusId">
+            <h3>Edit cactus</h3>
             <input class="input-title" type="text" v-model="uTitle" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="uBody" placeholder="Lorem ipsum dolor sit amet..."></textarea>
+            <div class="button-container">
+                <div class="button" @click="editCactus">Edit</div>
+                <div class="offset"></div>
+                <div class="button" @click="cancelEdit">Cancel</div>
+            </div>
         </div>
         <div v-else>
+            <h3>Add a new cactus</h3>
             <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
-        </div>
-        <div v-if="cactusId" class="button-container">
-            <div class="button" @click="editCactus">Edit</div>
-            <div class="offset"></div>
-            <div class="button" @click="cancelEdit">Cancel</div>
-        </div>
-        <div class="button-container" v-else>
-            <div class="button" @click="addCactus">Add</div>
+            <div class="button-container">
+                <div class="button" @click="addCactus">Add</div>
+            </div>
         </div>
     </div>
 </template>

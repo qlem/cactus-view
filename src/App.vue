@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="header">Welcome to Cactus</div>
-        <Nav class="nav"/>
+        <Navigation class="nav"/>
         <router-view class="content"/>
         <SignIn class="sign-in"/>
     </div>
@@ -10,19 +10,19 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
-import Nav from '@/components/Navigation.vue'
+import Navigation from '@/components/Navigation.vue'
 import SignIn from '@/components/SignIn.vue'
 
 @Component({
     components: {
-        Nav,
+        Navigation,
         SignIn
     }
 })
 export default class App extends Vue {
     created() {
         http.instance.interceptors.response.use(undefined, async (err: any) => {
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 await this.$store.dispatch('authLogout');
                 this.$router.push('/');
             }

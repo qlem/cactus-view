@@ -1,12 +1,12 @@
 <template>
-    <div class="main">
-        <h2 class="main-title">Home</h2>
+    <div>
+        <h2>Home</h2>
         <div class="cactus" v-for="post in posts" :key="post._id">
-            <div class="cactus-admin">
-                <div v-if="isAuth" class="admin-button edit-button" @click="toEditCactus(post)">
+            <div class="cactus-admin" v-if="isAuth">
+                <div class="admin-button" @click="toEditCactus(post)">
                     <img src="../assets/edit.png" alt="edit">
                 </div>
-                <div v-if="isAuth" class="admin-button" @click="deleteCactus(post._id)">
+                <div class="admin-button" @click="deleteCactus(post._id)">
                     <img src="../assets/trash.png" alt="delete">
                 </div>
             </div>
