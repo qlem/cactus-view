@@ -39,6 +39,7 @@ export default new Vuex.Store({
                 http.instance.defaults.headers.common['token'] = token;
                 context.commit('AUTH_SUCCESS', token);
             } catch (e) {
+                console.error('Cannot login');
                 console.error(e);
                 context.commit('AUTH_ERROR', e);
                 // http.deleteCookie()
@@ -50,7 +51,8 @@ export default new Vuex.Store({
                 delete http.instance.defaults.headers.common['token'];
                 http.deleteCookie()
             } catch (e) {
-                // NOTHING BECAUSE I LOVE THE VOID
+                console.error('Logout error');
+                console.error(e)
             }
         }
     },

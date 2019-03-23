@@ -36,7 +36,7 @@ export default class SignIn extends Vue {
             });
             this.swapLogin()
         } catch (e) {
-            console.error('Cannot login');
+            console.error('Login error');
             console.error(e)
         }
     }
@@ -45,7 +45,7 @@ export default class SignIn extends Vue {
             this.$router.push('/');
             await this.$store.dispatch('authLogout')
         } catch (e) {
-            console.error('Error detected while logout');
+            console.error('Logout error');
             console.error(e)
         }
     }

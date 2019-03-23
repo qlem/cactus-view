@@ -20,7 +20,6 @@ import SignIn from '@/components/SignIn.vue'
     }
 })
 export default class App extends Vue {
-
     created() {
         http.instance.interceptors.response.use(undefined, async (err: any) => {
             if (err.response.status === 401) {

@@ -105,6 +105,7 @@ export default class Home extends Vue {
 
 .cactus-author
     font-size 0.7em
+    margin-top 3px
 
 .cactus-body
     margin-top 10px
