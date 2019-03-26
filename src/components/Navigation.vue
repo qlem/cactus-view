@@ -37,4 +37,11 @@ export default class Navigation extends Vue {
 
 .link:hover:not(.router-link-exact-active)
     background-color: #111
+
+@media screen and (max-width: 700px)
+    .link
+        height 35px
+        min-height 35px
+        font-size 0.8em
+
 </style>
