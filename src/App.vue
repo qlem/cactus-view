@@ -6,7 +6,7 @@
             </div>
             <div class="header-title">Welcome to Cactus</div>
         </div>
-        <Navigation class="nav" v-show="responsive ? showNav : true"/>
+        <Navigation class="nav" v-show="responsive ? showNav : true" @click-on-link="mutateNav"/>
         <router-view class="content"/>
         <SignIn class="sign-in"/>
     </div>
@@ -45,6 +45,11 @@ export default class App extends Vue {
     }
     resizeHandler(event: any) {
         this.responsive = window.innerWidth <= 700;
+    }
+    mutateNav() {
+        if (this.responsive && this.showNav) {
+            return this.showNav = !this.showNav
+        }
     }
 }
 </script>
