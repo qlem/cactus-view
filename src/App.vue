@@ -2,7 +2,7 @@
     <div id="app" @click="clickHandler">
         <div class="header">
             <div class="nav-button-container" v-if="responsive" @click.stop="showNav = !showNav">
-                <img class="nav-button" src="./assets/menu.svg" alt="menu">
+                <img class="nav-button" src="./assets/menu.png" alt="menu">
             </div>
             <div class="header-title" v-if="!responsive">Welcome to Cactus</div>
         </div>
@@ -76,6 +76,8 @@ export default class App extends Vue {
 </script>
 
 <style lang="stylus">
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 body
     margin 0
     padding 0
@@ -83,7 +85,8 @@ body
     height 100%
 
 #app
-    font-family 'Avenir', Helvetica, Arial, sans-serif
+    // font-family 'Avenir', Helvetica, Arial, sans-serif
+    font-family: 'Montserrat', sans-serif
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
     position fixed
@@ -119,8 +122,8 @@ body
         background #4CAF50
 
 .nav-button
-    width 35px
-    height 35px
+    width 30px
+    height 30px
 
 .nav
     background #494949
@@ -138,6 +141,8 @@ body
     width calc(100% - 280px)
     overflow auto
     padding 0 40px 0 40px
+    h2, h3
+        color #494949
 
 .log-button
     position absolute
@@ -151,7 +156,7 @@ body
     &:hover
         color #d3d3d3
 
-@media screen and (max-width: 700px)
+@media screen and (max-width: 600px)
     .header
         height 50px
 

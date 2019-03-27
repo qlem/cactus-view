@@ -5,9 +5,8 @@
             <input class="input" type="text" v-model="username" placeholder="username"/>
             <input class="input" type="password" v-model="password" placeholder="password"/>
             <div class="button-container">
-                <common-button text="Cancel" @click-on="cancelLogin"></common-button>
-                <div class="offset"></div>
-                <common-button text="Log In" @click-on="login"></common-button>
+                <common-button text="cancel" @click-on="cancelLogin"></common-button>
+                <common-button text="log in" @click-on="login"></common-button>
             </div>
         </div>
     </div>
@@ -50,7 +49,7 @@ export default class SignIn extends Vue {
     width 218px
 
 .input
-    margin-top 20px
+    margin-bottom 20px
     color black
     border: 2px solid black
     padding 10px
@@ -58,11 +57,8 @@ export default class SignIn extends Vue {
     width calc(100% - 24px)
 
 .button-container
-      display flex
-      justify-content flex-end
-      flex-direction row
-      margin 20px 0 30px 0
-
-.offset
-    width 10px
+    display flex
+    flex-direction row
+    justify-content space-between
+    margin-bottom 30
 </style>

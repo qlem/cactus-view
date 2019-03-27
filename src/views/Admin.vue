@@ -6,9 +6,8 @@
             <input class="input-title" type="text" v-model="uTitle" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="uBody" placeholder="Lorem ipsum dolor sit amet..."></textarea>
             <div class="button-container">
-                <common-button text="Cancel" @click-on="cancelEdit"></common-button>
-                <div class="offset"></div>
-                <common-button text="Edit" @click-on="editCactus"></common-button>
+                <common-button text="cancel" @click-on="cancelEdit"></common-button>
+                <common-button class="edit-button" text="edit" @click-on="editCactus"></common-button>
             </div>
         </div>
         <div v-else>
@@ -16,7 +15,7 @@
             <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
             <div class="button-container">
-                <common-button text="Add" @click-on="addCactus"></common-button>
+                <common-button text="add" @click-on="addCactus"></common-button>
             </div>
         </div>
     </div>
@@ -103,6 +102,6 @@ export default class Admin extends Vue {
     flex-direction row
     margin 10px 0 30px 0
 
-.offset
-    width 10px
+.edit-button
+    margin-left 10px
 </style>

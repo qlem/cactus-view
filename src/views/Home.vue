@@ -99,23 +99,32 @@ export default class Home extends Vue {
         cursor pointer
 
 .cactus-title
-    flex-grow 1
+    font-size 1.3em
     font-weight bold
     color #4CAF50
+    margin-right 50px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 
 .cactus-author
     font-size 0.7em
     margin-top 3px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 
 .cactus-body
     margin-top 10px
-    position relative
 
 .cactus-last-edited
     font-style italic
     font-size 0.6em
     text-align right
     margin-top 10px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 
 .margin-bottom
     height 20px
