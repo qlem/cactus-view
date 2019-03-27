@@ -55,7 +55,7 @@ export default class App extends Vue {
             return this.showNav = !this.showNav
         }
     }
-    async logIn() {
+    logIn() {
         this.$router.push('login')
     }
     async logOut() {

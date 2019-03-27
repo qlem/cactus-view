@@ -64,7 +64,7 @@ export default class Home extends Vue {
             console.error(e);
         }
     }
-    async toEditCactus(cactus: any) {
+    toEditCactus(cactus: any) {
         this.$router.push({name: 'admin', params: {
             cactusId: cactus._id,
             pTitle: cactus.title,
@@ -115,7 +115,7 @@ export default class Home extends Vue {
     text-overflow: ellipsis
 
 .cactus-body
-    margin-top 10px
+    margin-top 15px
 
 .cactus-last-edited
     font-style italic

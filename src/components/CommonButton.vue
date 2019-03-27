@@ -17,7 +17,7 @@ export default class CommonButton extends Vue {
     color white
     width 100px
     background #409643
-    padding 10px 0 10px 0
+    padding 5px 0 5px 0
     border 2px solid black
     &:hover
         cursor pointer

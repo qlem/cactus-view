@@ -69,7 +69,7 @@ export default class Admin extends Vue {
             console.error(e)
         }
     }
-    async cancelEdit() {
+    cancelEdit() {
         this.uTitle = '';
         this.uBody = '';
         this.$router.push('/')
