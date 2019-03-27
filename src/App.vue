@@ -1,18 +1,17 @@
 <template>
-    <div id="app">
+    <div id="app" @click="clickHandler">
         <div class="header">
-            <div class="nav-button-container">
-                <div class="nav-button" v-if="responsive" @click="showNav = !showNav"></div>
+            <div class="nav-button-container" v-if="responsive" @click.stop="showNav = !showNav">
+                <img class="nav-button" src="./assets/menu.svg" alt="menu">
             </div>
-            <div class="header-title">Welcome to Cactus</div>
+            <div class="header-title" v-if="!responsive">Welcome to Cactus</div>
         </div>
-        <Navigation class="nav" v-show="responsive ? showNav : true" @click-on-link="flipNav"/>
+        <transition name="slide">
+            <Navigation class="nav" v-show="responsive ? showNav : true" @click-on-link="flipNav"/>
+        </transition>
         <router-view class="content"/>
-        <!-- <SignIn class="sign-in" v-if="!responsive"/>
-        <div v-else> -->
         <div v-if="!isAuth" class="log-button" @click="logIn">login</div>
         <div v-else class="log-button" @click="logOut">logout</div>
-        <!-- </div> -->
     </div>
 </template>
 
@@ -20,12 +19,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
 import Navigation from '@/components/Navigation.vue'
-import SignIn from '@/components/SignIn.vue'
 
 @Component({
     components: {
-        Navigation,
-        SignIn
+        Navigation
     }
 })
 export default class App extends Vue {
@@ -50,7 +47,7 @@ export default class App extends Vue {
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeHandler)
     }
-    resizeHandler(event: any) {
+    resizeHandler() {
         this.responsive = window.innerWidth <= 700;
     }
     flipNav() {
@@ -68,6 +65,11 @@ export default class App extends Vue {
         } catch (e) {
             console.error('Logout error');
             console.error(e)
+        }
+    }
+    clickHandler() {
+        if (this.responsive && this.showNav) {
+            this.showNav = false;
         }
     }
 }
@@ -111,18 +113,17 @@ body
     display flex
     justify-content center
     align-items center
+    cursor pointer
+    width 50px
+    &:hover
+        background #4CAF50
 
 .nav-button
-    display flex
-    justify-content center
-    align-items center
-    margin 0 10px 0 10px
     width 35px
     height 35px
-    cursor pointer
-    background #ff494e
 
 .nav
+    background #494949
     position absolute
     top 100px
     width 200px
@@ -138,21 +139,15 @@ body
     overflow auto
     padding 0 40px 0 40px
 
-.sign-in
-    position absolute
-    top 0
-    right 0
-    z-index 2
-
 .log-button
     position absolute
     top 0
     right 0
-    z-index 2
     margin 10px 10px 0 0
     cursor pointer
     display flex
     justify-content flex-end
+    z-index 2
     &:hover
         color #d3d3d3
 
@@ -160,17 +155,13 @@ body
     .header
         height 50px
 
-    .header-title
-        font-size 1.5em
-        padding 0
-        align-items center
-
     .nav
         border-top: 1px solid #000000
         top 50px
-        width 100px
+        width 150px
         height calc(100% - 50px)
         z-index 1
+        box-shadow 3px 3px 6px 0 rgba(0, 0, 0, 0.3)
 
     .content
         top 50px
@@ -178,4 +169,22 @@ body
         width calc(100% - 40px)
         height calc(100% - 50px)
         padding 0 20px 0 20px
+
+    .slide-leave-active
+        animation: close .4s linear
+
+    .slide-enter-active
+        animation: open .4s linear
+
+    @keyframes close
+        from
+            left: 0
+        to
+            left: -150px
+
+    @keyframes open
+        from
+            left: -150px
+        to
+            left: 0
 </style>

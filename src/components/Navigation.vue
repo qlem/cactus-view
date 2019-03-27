@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/">Home</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/about">About</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" v-if="isAuth" to="/admin">Admin</router-link>
@@ -18,16 +18,10 @@ export default class Navigation extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.main
-    background #494949
-    display flex
-    flex-direction column
-
 .link
     color: white
     cursor pointer
     height 55px
-    min-height 55px
     display flex
     justify-content center
     align-items center
@@ -40,8 +34,7 @@ export default class Navigation extends Vue {
 
 @media screen and (max-width: 700px)
     .link
-        height 35px
-        min-height 35px
+        height 40px
         font-size 0.8em
 
 </style>
