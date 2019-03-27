@@ -49,7 +49,7 @@ export default class SignIn extends Vue {
     width 218px
 
 .input
-    margin-bottom 20px
+    margin-bottom 10px
     color black
     border: 2px solid black
     padding 10px
