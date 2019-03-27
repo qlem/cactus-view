@@ -42,13 +42,13 @@ export default class App extends Vue {
     }
     mounted() {
         window.addEventListener('resize', this.resizeHandler);
-        this.responsive = window.innerWidth <= 700;
+        this.responsive = window.innerWidth <= 600;
     }
     beforeDestroy() {
         window.removeEventListener('resize', this.resizeHandler)
     }
     resizeHandler() {
-        this.responsive = window.innerWidth <= 700;
+        this.responsive = window.innerWidth <= 600;
     }
     flipNav() {
         if (this.responsive && this.showNav) {
