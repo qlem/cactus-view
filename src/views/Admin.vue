@@ -6,9 +6,9 @@
             <input class="input-title" type="text" v-model="uTitle" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="uBody" placeholder="Lorem ipsum dolor sit amet..."></textarea>
             <div class="button-container">
-                <div class="button" @click="editCactus">Edit</div>
+                <common-button text="Cancel" @click-on="cancelEdit"></common-button>
                 <div class="offset"></div>
-                <div class="button" @click="cancelEdit">Cancel</div>
+                <common-button text="Edit" @click-on="editCactus"></common-button>
             </div>
         </div>
         <div v-else>
@@ -16,7 +16,7 @@
             <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
             <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
             <div class="button-container">
-                <div class="button" @click="addCactus">Add</div>
+                <common-button text="Add" @click-on="addCactus"></common-button>
             </div>
         </div>
     </div>
@@ -25,8 +25,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
+import CommonButton from '@/components/CommonButton.vue'
 
-@Component
+@Component({
+    components: {
+        CommonButton
+    }
+})
 export default class Admin extends Vue {
     @Prop() private cactusId!: string;
     @Prop() private pTitle!: string;
@@ -97,17 +102,6 @@ export default class Admin extends Vue {
     justify-content flex-end
     flex-direction row
     margin 10px 0 30px 0
-
-.button
-    text-align center
-    color white
-    width 100px
-    background #409643
-    padding 10px 0 10px 0
-    border 2px solid black
-    &:hover
-        cursor pointer
-        background #4CAF50
 
 .offset
     width 10px

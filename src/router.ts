@@ -12,6 +12,14 @@ const ifAuth = (to: any, from: any, next: any) => {
     next()
 };
 
+const ifNotAuth = (to: any, from: any, next: any) => {
+    if (store.getters.isAuth) {
+        next('/');
+        return
+    }
+    next()
+};
+
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
@@ -32,6 +40,12 @@ export default new Router({
             props: true,
             component: () => import(/* webpackChunkName: "cactus" */ './views/Admin.vue'),
             beforeEnter: ifAuth,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: () => import(/* webpackChunkName: "cactus" */ './views/Login.vue'),
+            beforeEnter: ifNotAuth,
         }
     ]
 })

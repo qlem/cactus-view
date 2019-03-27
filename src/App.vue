@@ -6,9 +6,13 @@
             </div>
             <div class="header-title">Welcome to Cactus</div>
         </div>
-        <Navigation class="nav" v-show="responsive ? showNav : true" @click-on-link="mutateNav"/>
+        <Navigation class="nav" v-show="responsive ? showNav : true" @click-on-link="flipNav"/>
         <router-view class="content"/>
-        <SignIn class="sign-in"/>
+        <!-- <SignIn class="sign-in" v-if="!responsive"/>
+        <div v-else> -->
+        <div v-if="!isAuth" class="log-button" @click="logIn">login</div>
+        <div v-else class="log-button" @click="logOut">logout</div>
+        <!-- </div> -->
     </div>
 </template>
 
@@ -27,6 +31,9 @@ import SignIn from '@/components/SignIn.vue'
 export default class App extends Vue {
     private responsive: boolean = false;
     private showNav: boolean = false;
+    get isAuth() {
+        return this.$store.getters.isAuth
+    }
     created() {
         http.instance.interceptors.response.use(undefined, async (err: any) => {
             if (err.response && err.response.status === 401) {
@@ -46,9 +53,21 @@ export default class App extends Vue {
     resizeHandler(event: any) {
         this.responsive = window.innerWidth <= 700;
     }
-    mutateNav() {
+    flipNav() {
         if (this.responsive && this.showNav) {
             return this.showNav = !this.showNav
+        }
+    }
+    async logIn() {
+        this.$router.push('login')
+    }
+    async logOut() {
+        try {
+            this.$router.push('/');
+            await this.$store.dispatch('authLogout')
+        } catch (e) {
+            console.error('Logout error');
+            console.error(e)
         }
     }
 }
@@ -124,6 +143,18 @@ body
     top 0
     right 0
     z-index 2
+
+.log-button
+    position absolute
+    top 0
+    right 0
+    z-index 2
+    margin 10px 10px 0 0
+    cursor pointer
+    display flex
+    justify-content flex-end
+    &:hover
+        color #d3d3d3
 
 @media screen and (max-width: 700px)
     .header

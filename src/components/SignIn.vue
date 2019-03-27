@@ -2,7 +2,7 @@
     <div>
         <div v-if="!isAuth">
             <div class="log-label-container">
-                <div class="log-label" @click="swapLogin">{{ logInLabel }}</div>
+                <div class="log-label" @click="flip">{{ logInLabel }}</div>
             </div>
             <div class="log-in-container" v-show="show">
                 <input type="text" class="input" v-model="login" placeholder="pseudo"/>
@@ -34,7 +34,7 @@ export default class SignIn extends Vue {
                     password: this.password
                 }
             });
-            this.swapLogin()
+            this.flip()
         } catch (e) {
             console.error('Login error');
             console.error(e)
@@ -49,12 +49,12 @@ export default class SignIn extends Vue {
             console.error(e)
         }
     }
-    swapLogin() {
+    flip() {
         this.show = !this.show;
         if (this.show) {
-            this.logInLabel = 'cancel'
+            this.logInLabel = 'cancel';
         } else {
-            this.logInLabel = 'login'
+            this.logInLabel = 'login';
         }
     }
 }
