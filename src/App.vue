@@ -1,9 +1,10 @@
 <template>
     <div id="app" @click="clickHandler">
         <div class="header">
-            <div class="nav-button-container" v-if="responsive" @click.stop="showNav = !showNav">
-                <!-- TODO remake that button -->
-                <img class="nav-button" src="./assets/menu.png" alt="menu">
+            <div class="nav-button" v-if="responsive" @click.stop="showNav = !showNav">
+                <div class="nav-button-bar"></div>
+                <div class="nav-button-bar"></div>
+                <div class="nav-button-bar"></div>
             </div>
             <div class="header-title" v-if="!responsive">Welcome to Cactus</div>
         </div>
@@ -113,18 +114,20 @@ body
     align-items flex-end
     padding 0 0 20px 40px
 
-.nav-button-container
+.nav-button
     display flex
-    justify-content center
+    flex-direction column
+    justify-content space-evenly
     align-items center
     cursor pointer
     width 50px
     &:hover
         background #4CAF50
 
-.nav-button
-    width 30px
-    height 30px
+.nav-button-bar
+    background black
+    height 6px
+    width 35px
 
 .nav
     background #494949
