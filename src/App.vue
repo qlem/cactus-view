@@ -2,6 +2,7 @@
     <div id="app" @click="clickHandler">
         <div class="header">
             <div class="nav-button-container" v-if="responsive" @click.stop="showNav = !showNav">
+                <!-- TODO remake that button -->
                 <img class="nav-button" src="./assets/menu.png" alt="menu">
             </div>
             <div class="header-title" v-if="!responsive">Welcome to Cactus</div>

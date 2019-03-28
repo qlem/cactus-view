@@ -60,5 +60,5 @@ export default class SignIn extends Vue {
     display flex
     flex-direction row
     justify-content space-between
-    margin-bottom 30
+    margin-bottom 30px
 </style>
