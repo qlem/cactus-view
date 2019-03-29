@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        token: http.getToken(),
+        token: '',
         status: ''
     },
     getters: {
@@ -18,18 +18,29 @@ export default new Vuex.Store({
             state.status = 'loading'
         },
         AUTH_SUCCESS: (state, token) => {
-            state.status = 'connected';
-            state.token = token
+            state.token = token;
+            state.status = 'logged';
         },
         AUTH_ERROR: state => {
-            state.status = 'error'
+            state.token = '';
+            state.status = 'error';
         },
         AUTH_LOGOUT: state => {
             state.token = '';
-            state.status = 'disconnected'
+            state.status = 'not logged';
         }
     },
     actions: {
+        initToken: (context, token) => {
+            try {
+                http.instance.defaults.headers.common['token'] = token;
+                context.commit('AUTH_SUCCESS', token);
+            } catch (e) {
+                console.error('Cannot set token');
+                console.error(e);
+                context.commit('AUTH_ERROR', e);
+            }
+        },
         authRequest: async (context, user) => {
             try {
                 context.commit('AUTH_REQUEST');
@@ -42,14 +53,13 @@ export default new Vuex.Store({
                 console.error('Cannot login');
                 console.error(e);
                 context.commit('AUTH_ERROR', e);
-                // http.deleteCookie()
             }
         },
         authLogout: context => {
             try {
-                context.commit('AUTH_LOGOUT');
                 delete http.instance.defaults.headers.common['token'];
-                http.deleteCookie()
+                http.deleteCookie();
+                context.commit('AUTH_LOGOUT');
             } catch (e) {
                 console.error('Logout error');
                 console.error(e)

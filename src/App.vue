@@ -34,8 +34,13 @@ export default class App extends Vue {
         return this.$store.getters.isAuth
     }
     created() {
+        const token = http.getCookie();
+        if (token !== '') {
+            this.$store.dispatch('initToken', token);
+        }
         http.instance.interceptors.response.use(undefined, async (err: any) => {
             if (err.response && err.response.status === 401) {
+                console.log('response auth failed');
                 await this.$store.dispatch('authLogout');
                 this.$router.push('/');
             }

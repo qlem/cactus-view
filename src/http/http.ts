@@ -5,6 +5,8 @@ class Http {
     private cookieName: string = 'cactusToken=';
     readonly instance: any;
 
+    // https://api.cactus.run
+    // http://localhost:3000
     constructor() {
         this.instance = axios.create({
             baseURL: 'https://api.cactus.run',
@@ -19,7 +21,7 @@ class Http {
         document.cookie = this.cookieName + token + ';' + exp;
     }
 
-    public getToken(): string {
+    public getCookie(): string {
         const decodedCookie: string = decodeURIComponent(document.cookie);
         const cookies: string[] = decodedCookie.split(';');
         for (let cookie of cookies) {
