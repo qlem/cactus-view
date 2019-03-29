@@ -40,7 +40,6 @@ export default class App extends Vue {
         }
         http.instance.interceptors.response.use(undefined, async (err: any) => {
             if (err.response && err.response.status === 401) {
-                console.log('response auth failed');
                 await this.$store.dispatch('authLogout');
                 this.$router.push('/');
             }
