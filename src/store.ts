@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { http } from "@/http/http";
+import { setCookie, deleteCookie } from "@/http/cookie";
 
 Vue.use(Vuex);
 
@@ -46,7 +47,7 @@ export default new Vuex.Store({
                 context.commit('AUTH_REQUEST');
                 const response = await http.instance.post('/identification', user);
                 const token = response.data.token;
-                http.setCookie(token, 10);
+                setCookie(token, 10);
                 http.instance.defaults.headers.common['token'] = token;
                 context.commit('AUTH_SUCCESS', token);
             } catch (e) {
@@ -58,7 +59,7 @@ export default new Vuex.Store({
         authLogout: context => {
             try {
                 delete http.instance.defaults.headers.common['token'];
-                http.deleteCookie();
+                deleteCookie();
                 context.commit('AUTH_LOGOUT');
             } catch (e) {
                 console.error('Logout error');

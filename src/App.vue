@@ -20,6 +20,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
+import { getCookie } from "@/http/cookie";
 import Navigation from '@/components/Navigation.vue'
 
 @Component({
@@ -34,7 +35,7 @@ export default class App extends Vue {
         return this.$store.getters.isAuth
     }
     created() {
-        const token = http.getCookie();
+        const token = getCookie();
         if (token !== '') {
             this.$store.dispatch('initToken', token);
         }
