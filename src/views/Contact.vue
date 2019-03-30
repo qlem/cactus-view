@@ -31,7 +31,8 @@ export default class Contact extends Vue {
             console.error('Cannot get cactus');
             console.error(e)
         }
-    }}
+    }
+}
 </script>
 
 <style scoped lang="stylus">

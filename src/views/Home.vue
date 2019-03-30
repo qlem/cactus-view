@@ -1,4 +1,3 @@
-import CactusType from "../http/cactusType";
 <template>
     <div>
         <h2>Home</h2>
@@ -12,8 +11,8 @@ import CactusType from "../http/cactusType";
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
-import Cactus from "@/components/Cactus.vue";
 import CactusType from '@/http/cactusType'
+import Cactus from "@/components/Cactus.vue";
 
 @Component({
     components: {
