@@ -38,12 +38,7 @@ export default class Admin extends Vue {
     @Prop() private cactus!: any;
     async addCactus() {
         try {
-            await http.addCactus({
-                title: this.cactus.title,
-                body: this.cactus.body,
-                type: this.cactus.type,
-                published: this.cactus.published
-            });
+            await http.addCactus(this.cactus);
             this.cactus.title = '';
             this.cactus.body = '';
             this.cactus.type = 'STD';
