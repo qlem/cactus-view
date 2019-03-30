@@ -1,22 +1,25 @@
 <template>
     <div>
-        <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
-        <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
+        <input class="input-title" type="text" v-model="cactus.title" placeholder="An another Cactus"/>
+        <textarea class="input-body" v-model="cactus.body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
         <div>
-            <input type="radio" id="uStd" value="STD" v-model="type">
+            <input type="radio" id="uStd" value="STD" v-model="cactus.type">
             <label for="uStd">standard</label>
-            <input type="radio" id="uAbout" value="ABOUT" v-model="type">
+            <input type="radio" id="uAbout" value="ABOUT" v-model="cactus.type">
             <label for="uAbout">about</label>
-            <input type="radio" id="uContact" value="CONTACT" v-model="type">
+            <input type="radio" id="uContact" value="CONTACT" v-model="cactus.type">
             <label for="uContact">contact</label>
         </div>
         <div>
-            <input type="checkbox" id="uPublished" v-model="published">
+            <input type="checkbox" id="uPublished" v-model="cactus.published">
             <label for="uPublished">published ?</label>
         </div>
-        <div class="button-container">
+        <div class="button-container" v-if="cactus._id">
             <common-button text="cancel" @click-on="cancelEdit"></common-button>
             <common-button class="edit-button" text="edit" @click-on="editCactus"></common-button>
+        </div>
+        <div class="button-container" v-else>
+            <common-button text="add" @click-on="addCactus"></common-button>
         </div>
     </div>
 </template>
@@ -33,20 +36,33 @@ import CommonButton from '@/components/CommonButton.vue'
 })
 export default class Admin extends Vue {
     @Prop() private cactus!: any;
-    private title: string = this.cactus.title;
-    private body: string = this.cactus.body;
-    private type: string = this.cactus.type;
-    private published: boolean = this.cactus.published;
+    async addCactus() {
+        try {
+            await http.addCactus({
+                title: this.cactus.title,
+                body: this.cactus.body,
+                type: this.cactus.type,
+                published: this.cactus.published
+            });
+            this.cactus.title = '';
+            this.cactus.body = '';
+            this.cactus.type = 'STD';
+            this.cactus.published = true;
+        } catch (e) {
+            console.error('Cannot create a new cactus');
+            console.error(e)
+        }
+    }
     async editCactus() {
         try {
             await http.editCactus({
                 _id: this.cactus._id,
-                title: this.title,
-                body: this.body,
-                type: this.type,
-                published: this.published
+                title: this.cactus.title,
+                body: this.cactus.body,
+                type: this.cactus.type,
+                published: this.cactus.published
             });
-            this.$router.push('/')
+            this.$router.go(-1)
         } catch (e) {
             console.error('Cannot edit cactus');
             console.error(e)
