@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
+import AddEditOne from '@/components/AddEditOne.vue'
+import EditMany from '@/components/EditMany.vue'
 
 Vue.use(Router);
 
@@ -44,7 +46,18 @@ export default new Router({
             name: 'admin',
             props: true,
             component: () => import(/* webpackChunkName: "cactus" */ './views/Admin.vue'),
-            beforeEnter: ifAuth,
+            children: [
+                {
+                    path: 'one',
+                    component: AddEditOne,
+                    props: true
+                },
+                {
+                    path: 'many',
+                    component: EditMany
+                }
+            ],
+            beforeEnter: ifAuth
         },
         {
             path: '/login',

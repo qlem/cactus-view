@@ -1,8 +1,10 @@
 <template>
     <div>
+        <h3 v-if="cactus._id">Edit cactus</h3>
+        <h3 v-else>Add a new cactus</h3>
         <input class="input-title" type="text" v-model="cactus.title" placeholder="An another Cactus"/>
         <textarea class="input-body" v-model="cactus.body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
-        <div>
+        <div class="cactus-type">
             <input type="radio" id="uStd" value="STD" v-model="cactus.type">
             <label for="uStd">standard</label>
             <input type="radio" id="uAbout" value="ABOUT" v-model="cactus.type">
@@ -10,7 +12,7 @@
             <input type="radio" id="uContact" value="CONTACT" v-model="cactus.type">
             <label for="uContact">contact</label>
         </div>
-        <div>
+        <div class="cactus-published">
             <input type="checkbox" id="uPublished" v-model="cactus.published">
             <label for="uPublished">published ?</label>
         </div>
@@ -96,5 +98,11 @@ export default class Admin extends Vue {
 
 .edit-button
     margin-left 10px
+
+.cactus-type
+    margin-top 10px
+
+.cactus-published
+    margin-top: 10px
 </style>
 
