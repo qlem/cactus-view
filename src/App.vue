@@ -34,10 +34,10 @@ export default class App extends Vue {
     get isAuth() {
         return this.$store.getters.isAuth
     }
-    created() {
+    async created() {
         const token = getCookie();
         if (token !== '') {
-            this.$store.dispatch('initToken', token);
+            await this.$store.dispatch('initToken', token);
         }
         http.instance.interceptors.response.use(undefined, async (err: any) => {
             if (err.response && err.response.status === 401) {

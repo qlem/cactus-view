@@ -11,7 +11,7 @@ export default new Vuex.Store({
         status: ''
     },
     getters: {
-        isAuth: state => !!state.token,
+        isAuth: state => state.token !== '',
         authStatus: state => state.status,
     },
     mutations: {
