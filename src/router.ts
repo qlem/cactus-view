@@ -35,6 +35,11 @@ export default new Router({
             component: () => import(/* webpackChunkName: "cactus" */ './views/About.vue')
         },
         {
+            path: '/contact',
+            name: 'contact',
+            component: () => import(/* webpackChunkName: "cactus" */ './views/Contact.vue')
+        },
+        {
             path: '/admin',
             name: 'admin',
             props: true,

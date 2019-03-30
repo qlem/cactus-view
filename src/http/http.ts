@@ -1,4 +1,6 @@
 import axios from 'axios'
+import moment from 'moment';
+import CactusType from '@/http/cactusType'
 
 class Http {
 
@@ -8,9 +10,79 @@ class Http {
     // http://localhost:3000
     constructor() {
         this.instance = axios.create({
-            baseURL: 'https://api.cactus.run',
+            baseURL: 'http://localhost:3000',
             timeout: 1000,
         });
+    }
+
+    async identification(user: any) {
+        try {
+            const response = await this.instance.post('/identification', user);
+            return response.data.token
+        } catch (e) {
+            console.error('Cannot proceed to identification');
+            console.error(e);
+        }
+    }
+
+    async getCactus(type: CactusType) {
+        try {
+            let response;
+            if (type !== CactusType.ALL) {
+                response = await this.instance.get('/blog', {
+                    params: {
+                        type: CactusType[type]
+                    }
+                });
+            } else {
+                response = await this.instance.get('/blog');
+            }
+            for (let post of response.data) {
+                post.date = moment(post.date).format('dddd, MMMM Do YYYY, h:mm:ss a');
+                if (Object.keys(post.lastEdited).length > 0) {
+                    post.lastEdited.date = moment(post.lastEdited.date).format('dddd, MMMM Do YYYY, h:mm:ss a');
+                }
+            }
+            return response.data;
+        } catch (e) {
+            console.error('Cannot get cactus');
+            console.error(e)
+        }
+    }
+
+    addCactus(cactus: any) {
+        try {
+            return this.instance.post('/blog', {
+                data: cactus
+            });
+        } catch (e) {
+            console.error('Cannot create a new cactus');
+            console.error(e)
+        }
+    }
+
+    editCactus(cactus: any) {
+        try {
+            return this.instance.put('/blog', {
+                data: cactus
+            });
+        } catch (e) {
+            console.error('Cannot edit cactus');
+            console.error(e)
+        }
+    }
+
+    deleteCactus(cactusId: string) {
+        try {
+            return this.instance.delete('/blog', {
+                params: {
+                    postId: cactusId
+                }
+            });
+        } catch (e) {
+            console.error('Cannot delete cactus');
+            console.error(e);
+        }
     }
 }
 

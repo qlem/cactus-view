@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="cactus-admin" v-if="isAuth">
-            <div class="admin-button" @click="$emit('edit-cactus', cactus)">
+            <div class="admin-button" @click="toEditCactus(cactus)">
                 <img src="../assets/edit.png" alt="edit">
             </div>
-            <div class="admin-button" @click="$emit('delete-cactus', cactus._id)">
+            <div class="admin-button" @click="deleteCactus(cactus._id)">
                 <img src="../assets/trash.png" alt="delete">
             </div>
         </div>
@@ -18,12 +18,27 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { http } from "@/http/http";
 
 @Component
 export default class Cactus extends Vue {
     @Prop() private cactus!: any;
     get isAuth() {
         return this.$store.getters.isAuth
+    }
+    async deleteCactus(cactusId: string) {
+        try {
+            await http.deleteCactus(cactusId);
+            this.$emit('cactus-deleted')
+        } catch (e) {
+            console.error('Cannot delete cactus');
+            console.error(e);
+        }
+    }
+    toEditCactus(cactus: any) {
+        this.$router.push({name: 'admin', params: {
+            cactus: cactus
+        }})
     }
 }
 </script>

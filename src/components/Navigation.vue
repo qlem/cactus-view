@@ -2,6 +2,7 @@
     <div>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/">Home</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/about">About</router-link>
+        <router-link class="link" @click.native="$emit('click-on-link')" to="/contact">Contact</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" v-if="isAuth" to="/admin">Admin</router-link>
     </div>
 </template>

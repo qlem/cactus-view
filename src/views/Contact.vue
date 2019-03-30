@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>About</h2>
+        <h2>Contact</h2>
         <div class="cactus-container" v-for="item in cactus" :key="item._id">
             <cactus :cactus="item" @cactus-deleted="getCactus"></cactus>
         </div>
@@ -19,20 +19,19 @@ import Cactus from "@/components/Cactus.vue";
         Cactus
     }
 })
-export default class About extends Vue {
+export default class Contact extends Vue {
     private cactus: any = [];
     async created() {
         await this.getCactus()
     }
     async getCactus() {
         try {
-            this.cactus = await http.getCactus(CactusType.ABOUT);
+            this.cactus = await http.getCactus(CactusType.CONTACT);
         } catch (e) {
             console.error('Cannot get cactus');
             console.error(e)
         }
-    }
-}
+    }}
 </script>
 
 <style scoped lang="stylus">

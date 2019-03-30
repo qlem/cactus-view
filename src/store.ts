@@ -45,8 +45,7 @@ export default new Vuex.Store({
         authRequest: async (context, user) => {
             try {
                 context.commit('AUTH_REQUEST');
-                const response = await http.instance.post('/identification', user);
-                const token = response.data.token;
+                const token = await http.identification(user);
                 setCookie(token, 10);
                 http.instance.defaults.headers.common['token'] = token;
                 context.commit('AUTH_SUCCESS', token);

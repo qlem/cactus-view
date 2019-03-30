@@ -1,8 +1,9 @@
+import CactusType from "../http/cactusType";
 <template>
     <div>
         <h2>Home</h2>
-        <div class="cactus-container" v-for="post in posts" :key="post._id">
-            <cactus :cactus="post" @edit-cactus="toEditCactus($event)" @delete-cactus="deleteCactus($event)"></cactus>
+        <div class="cactus-container" v-for="item in cactus" :key="item._id">
+            <cactus :cactus="item" @cactus-deleted="getCactus"></cactus>
         </div>
         <div class="margin-bottom"></div>
     </div>
@@ -11,8 +12,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
-import moment from 'moment';
 import Cactus from "@/components/Cactus.vue";
+import CactusType from '@/http/cactusType'
 
 @Component({
     components: {
@@ -20,44 +21,17 @@ import Cactus from "@/components/Cactus.vue";
     }
 })
 export default class Home extends Vue {
-    private posts: any = [];
+    private cactus: any = [];
     async created() {
         await this.getCactus()
     }
     async getCactus() {
         try {
-            const response = await http.instance.get('/blog');
-            for (let post of response.data) {
-                post.date = moment(post.date).format('dddd, MMMM Do YYYY, h:mm:ss a');
-                if (Object.keys(post.lastEdited).length > 0) {
-                    post.lastEdited.date = moment(post.lastEdited.date).format('dddd, MMMM Do YYYY, h:mm:ss a');
-                }
-            }
-            this.posts = response.data;
+            this.cactus = await http.getCactus(CactusType.STD);
         } catch (e) {
             console.error('Cannot get cactus');
             console.error(e)
         }
-    }
-    async deleteCactus(cactusId: string) {
-        try {
-            await http.instance.delete('/blog', {
-                params: {
-                    postId: cactusId
-                }
-            });
-            await this.getCactus()
-        } catch (e) {
-            console.error('Cannot delete cactus');
-            console.error(e);
-        }
-    }
-    toEditCactus(cactus: any) {
-        this.$router.push({name: 'admin', params: {
-            cactusId: cactus._id,
-            pTitle: cactus.title,
-            pBody: cactus.body
-        }})
     }
 }
 </script>
