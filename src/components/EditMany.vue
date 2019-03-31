@@ -6,7 +6,6 @@
                 <compact-cactus v-if="item.type === 'STD'" :cactus="item"
                                 @update-type="updateType(item, $event)"
                                 @update-published="updatePublished(item, !item.published)"
-                                @edit-cactus="toEdit(item)"
                                 @delete-cactus="deleteCactus(item._id)"></compact-cactus>
             </div>
         </div>
@@ -16,7 +15,6 @@
                 <compact-cactus v-if="item.type === 'ABOUT'" :cactus="item"
                                 @update-type="updateType(item, $event)"
                                 @update-published="updatePublished(item, !item.published)"
-                                @edit-cactus="toEdit(item)"
                                 @delete-cactus="deleteCactus(item._id)"></compact-cactus>
             </div>
         </div>
@@ -26,7 +24,6 @@
                 <compact-cactus v-if="item.type === 'CONTACT'" :cactus="item"
                                 @update-type="updateType(item, $event)"
                                 @update-published="updatePublished(item, !item.published)"
-                                @edit-cactus="toEdit(item)"
                                 @delete-cactus="deleteCactus(item._id)"></compact-cactus>
             </div>
         </div>
@@ -80,9 +77,6 @@ export default class EditManyCactus extends Vue {
             console.error('Cannot update cactus published state');
             console.error(e)
         }
-    }
-    toEdit(cactus: any) {
-        // TODO
     }
     async deleteCactus(id: string) {
         try {

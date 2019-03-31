@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store'
-import AddEditOne from '@/components/AddEditOne.vue'
-import EditMany from '@/components/EditMany.vue'
 
 Vue.use(Router);
 
@@ -25,6 +23,8 @@ const ifNotAuth = (to: any, from: any, next: any) => {
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
+    linkActiveClass: 'active',
+    linkExactActiveClass: 'exact-active',
     routes: [
         {
             path: '/',
@@ -43,27 +43,33 @@ export default new Router({
         },
         {
             path: '/admin',
-            name: 'admin',
-            props: true,
+            name:'admin',
             component: () => import(/* webpackChunkName: "cactus" */ './views/Admin.vue'),
+            // props: true,
             children: [
                 {
                     path: 'one',
-                    component: AddEditOne,
+                    name: 'addEditOne',
+                    component: () => import(/* webpackChunkName: "cactus" */ './components/AddEditOne.vue'),
                     props: true
                 },
                 {
                     path: 'many',
-                    component: EditMany
+                    name: 'editMany',
+                    component: () => import(/* webpackChunkName: "cactus" */ './components/EditMany.vue'),
                 }
             ],
-            beforeEnter: ifAuth
+            // beforeEnter: ifAuth
         },
         {
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "cactus" */ './views/Login.vue'),
             beforeEnter: ifNotAuth,
+        },
+        {
+            path: '/*',
+            redirect: { name: 'home' }
         }
     ]
 })

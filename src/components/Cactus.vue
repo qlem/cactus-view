@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="cactus-admin" v-if="isAuth">
-            <div class="admin-button" @click="toEditCactus(cactus)">
+            <div class="admin-button" @click="toEdit(cactus)">
                 <img src="../assets/edit.png" alt="edit">
             </div>
             <div class="admin-button" @click="deleteCactus(cactus._id)">
@@ -35,10 +35,13 @@ export default class Cactus extends Vue {
             console.error(e);
         }
     }
-    toEditCactus(cactus: any) {
-        this.$router.push({name: 'admin', params: {
-            cactus: cactus
-        }})
+    toEdit(cactus: any) {
+        this.$router.push({
+            name: 'addEditOne',
+            params: {
+                cactus: cactus
+            }
+        })
     }
 }
 </script>

@@ -1,9 +1,20 @@
 <template>
     <div>
-        <router-link class="link" @click.native="$emit('click-on-link')" to="/">Home</router-link>
+        <router-link class="link" @click.native="$emit('click-on-link')" to="/" exact>Home</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/about">About</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/contact">Contact</router-link>
-        <router-link class="link" @click.native="$emit('click-on-link')" v-if="isAuth" to="/admin">Admin</router-link>
+        <router-link class="link" @click.native="$emit('click-on-link')" v-if="isAuth"
+                     :to="{
+                        name: 'addEditOne',
+                        params: {
+                            cactus: {
+                                title: '',
+                                body: '',
+                                type: 'STD',
+                                published: true
+                            }
+                        }
+                     }">Admin</router-link>
     </div>
 </template>
 
@@ -27,11 +38,10 @@ export default class Navigation extends Vue {
     justify-content center
     align-items center
     text-decoration none
-    &.router-link-exact-active
+    &.active
         background-color: #4CAF50
-
-.link:hover:not(.router-link-exact-active)
-    background-color: #111
+    &:hover:not(.active)
+        background-color: #111
 
 @media screen and (max-width: 600px)
     .link

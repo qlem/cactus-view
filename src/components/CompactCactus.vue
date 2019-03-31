@@ -9,7 +9,7 @@
              @click="$emit('update-type', 'CONTACT')">contact</div>
         <div class="box" :class="{ active: cactus.published }"
              @click="$emit('update-published')">published</div>
-        <div class="box" @click="$emit('edit-cactus')">edit</div>
+        <div class="box" @click="toEdit(cactus)">edit</div>
         <div class="box" @click="$emit('delete-cactus')">delete</div>
     </div>
 </template>
@@ -20,6 +20,14 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class CompactCactus extends Vue {
     @Prop() private cactus: any;
+    toEdit(cactus: any) {
+        this.$router.push({
+            name: 'addEditOne',
+            params: {
+                cactus: cactus
+            }
+        })
+    }
 }
 </script>
 
@@ -38,6 +46,7 @@ export default class CompactCactus extends Vue {
     &:hover:not(.active)
         font-size 1.2em
         background #4CAF50
+        transition .3s
 
 .active
     background #4CAF50
