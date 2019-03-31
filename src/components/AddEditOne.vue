@@ -2,26 +2,21 @@
     <div>
         <h3 v-if="cactus._id">Edit cactus</h3>
         <h3 v-else>Add a new cactus</h3>
-        <input class="input-title" type="text" v-model="cactus.title" placeholder="An another Cactus"/>
-        <textarea class="input-body" v-model="cactus.body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
-        <div class="cactus-type">
-            <input type="radio" id="uStd" value="STD" v-model="cactus.type">
-            <label for="uStd">standard</label>
-            <input type="radio" id="uAbout" value="ABOUT" v-model="cactus.type">
-            <label for="uAbout">about</label>
-            <input type="radio" id="uContact" value="CONTACT" v-model="cactus.type">
-            <label for="uContact">contact</label>
-        </div>
-        <div class="cactus-published">
-            <input type="checkbox" id="uPublished" v-model="cactus.published">
-            <label for="uPublished">published ?</label>
-        </div>
-        <div class="button-container" v-if="cactus._id">
-            <common-button text="cancel" @click-on="cancelEdit"></common-button>
-            <common-button class="edit-button" text="edit" @click-on="editCactus"></common-button>
-        </div>
-        <div class="button-container" v-else>
-            <common-button text="add" @click-on="addCactus"></common-button>
+        <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
+        <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
+        <div class="box-container">
+            <div class="box" :class="{ active: type === 'STD' }"
+                 @click="type = 'STD'">standard</div>
+            <div class="box margin-box" :class="{ active: type === 'ABOUT' }"
+                 @click="type = 'ABOUT'">about</div>
+            <div class="box margin-box" :class="{ active: type === 'CONTACT' }"
+                 @click="type = 'CONTACT'">contact</div>
+            <div class="box margin-box" :class="{ active: published }"
+                 @click="published = !published">published</div>
+            <div class="offset"></div>
+            <div v-if="!cactus._id" class="box important margin-box" @click="addCactus">add</div>
+            <div v-if="cactus._id" class="box important margin-box" @click="cancelEdit">cancel</div>
+            <div v-if="cactus._id" class="box important margin-box" @click="editCactus">edit</div>
         </div>
     </div>
 </template>
@@ -38,13 +33,25 @@ import CommonButton from '@/components/CommonButton.vue'
 })
 export default class Admin extends Vue {
     @Prop() private cactus!: any;
+    private title: string = this.cactus.title;
+    private body: string = this.cactus.body;
+    private type: string = this.cactus.type;
+    private published: boolean = this.cactus.published;
     async addCactus() {
         try {
-            await http.addCactus(this.cactus);
-            this.cactus.title = '';
-            this.cactus.body = '';
-            this.cactus.type = 'STD';
-            this.cactus.published = true;
+            if (this.title === '' || this.body === '') {
+                return
+            }
+            await http.addCactus({
+                title: this.title,
+                body: this.body,
+                type: this.type,
+                published: this.published
+            });
+            this.title = '';
+            this.body = '';
+            this.type = 'STD';
+            this.published = true;
         } catch (e) {
             console.error('Cannot create a new cactus');
             console.error(e)
@@ -52,13 +59,19 @@ export default class Admin extends Vue {
     }
     async editCactus() {
         try {
-            await http.editCactus({
+            if (this.title === '' || this.body === '') {
+                return
+            }
+            let update: any = {
                 _id: this.cactus._id,
-                title: this.cactus.title,
-                body: this.cactus.body,
-                type: this.cactus.type,
-                published: this.cactus.published
-            });
+                type: this.type,
+                published: this.published
+            };
+            if (this.title !== this.cactus.title || this.body !== this.cactus.body) {
+                update.title = this.title;
+                update.body = this.body;
+            }
+            await http.editCactus(update);
             this.$router.go(-1)
         } catch (e) {
             console.error('Cannot edit cactus');
@@ -87,22 +100,39 @@ export default class Admin extends Vue {
     border 2px solid black
     padding 10px
     width 100%
-    height 200px
+    height 170px
     resize none
 
-.button-container
+.box-container
     display flex
-    justify-content flex-end
-    flex-direction row
-    margin 10px 0 30px 0
+    margin 10px 0 20px 0
+    align-items center
+    flex-wrap wrap
 
-.edit-button
-    margin-left 10px
+.box
+    border: 1px solid #000000
+    padding 5px
+    margin 5px 0 5px 0
+    cursor pointer
+    &:hover:not(.active)
+        font-size 1.2em
+        background #3bafff
+        transition .3s
 
-.cactus-type
-    margin-top 10px
+.active
+    background #3bafff
 
-.cactus-published
-    margin-top: 10px
+.important
+    font-weight bolder
+    &:hover
+        font-size 1.2em
+        background #4CAF50
+        transition .3s
+
+.offset
+    flex-grow 1
+
+.margin-box
+    margin-left 5px
 </style>
 

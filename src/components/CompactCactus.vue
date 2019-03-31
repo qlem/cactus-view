@@ -33,7 +33,6 @@ export default class CompactCactus extends Vue {
 
 <style scoped lang="stylus">
 .main
-    background #ff494e
     display flex
     height 50px
     align-items center

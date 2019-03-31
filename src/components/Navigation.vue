@@ -4,17 +4,7 @@
         <router-link class="link" @click.native="$emit('click-on-link')" to="/about">About</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" to="/contact">Contact</router-link>
         <router-link class="link" @click.native="$emit('click-on-link')" v-if="isAuth"
-                     :to="{
-                        name: 'addEditOne',
-                        params: {
-                            cactus: {
-                                title: '',
-                                body: '',
-                                type: 'STD',
-                                published: true
-                            }
-                        }
-                     }">Admin</router-link>
+                     :to="{ name: 'addEditOne'} ">Admin</router-link>
     </div>
 </template>
 

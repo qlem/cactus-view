@@ -20,6 +20,20 @@ const ifNotAuth = (to: any, from: any, next: any) => {
     next()
 };
 
+const defaultProps = (route: any) => {
+    if (!route.params.cactus) {
+        return {
+            cactus: {
+                title: '',
+                body: '',
+                type: 'STD',
+                published: true
+            }
+        }
+    }
+    return route.params
+};
+
 export default new Router({
     mode: 'history',
     base: process.env.BASE_URL,
@@ -43,15 +57,13 @@ export default new Router({
         },
         {
             path: '/admin',
-            name:'admin',
             component: () => import(/* webpackChunkName: "cactus" */ './views/Admin.vue'),
-            // props: true,
             children: [
                 {
-                    path: 'one',
+                    path: '',
                     name: 'addEditOne',
                     component: () => import(/* webpackChunkName: "cactus" */ './components/AddEditOne.vue'),
-                    props: true
+                    props: defaultProps
                 },
                 {
                     path: 'many',
@@ -59,7 +71,7 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "cactus" */ './components/EditMany.vue'),
                 }
             ],
-            // beforeEnter: ifAuth
+            beforeEnter: ifAuth
         },
         {
             path: '/login',
