@@ -110,6 +110,7 @@ export default class Admin extends Vue {
 .btn-container
     display flex
     flex-wrap wrap
+    padding-bottom 10px
 
 .offset
     flex-grow 1

@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div>
         <div>
             <div class="title-cat">Home</div>
             <div v-for="item in cactus" :key="item._id">
@@ -57,6 +57,9 @@ export default class EditManyCactus extends Vue {
     }
     async updateType(cactus: any, type: string) {
         try {
+            if (cactus.type === type) {
+                return
+            }
             await http.editCactus({
                 _id: cactus._id,
                 type: type
@@ -92,9 +95,6 @@ export default class EditManyCactus extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.main
-    padding-top 5px
-
 .title-cat
     color #494949
     font-weight bold

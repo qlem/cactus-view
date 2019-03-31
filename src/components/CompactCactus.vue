@@ -37,6 +37,12 @@ export default class CompactCactus extends Vue {
 </script>
 
 <style scoped lang="stylus">
+.title
+    max-width 350px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+
 .main
     display flex
     align-items center

@@ -20,9 +20,7 @@ export default class CommonButton extends Vue {
 .container
     display flex
     height 50px
-    justify-content center
     align-items center
-    align-content center
 
 .button
     border: 1px solid black
