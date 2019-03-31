@@ -1,22 +1,21 @@
 <template>
     <div>
-        <h3 v-if="cactus._id">Edit cactus</h3>
-        <h3 v-else>Add a new cactus</h3>
+        <div class="title" v-if="cactus._id">Edit cactus</div>
+        <div class="title" v-else>Add a new cactus</div>
         <input class="input-title" type="text" v-model="title" placeholder="An another Cactus"/>
         <textarea class="input-body" v-model="body" placeholder="Lorem ipsum dolor sit amet..."></textarea>
-        <div class="box-container">
-            <div class="box" :class="{ active: type === 'STD' }"
-                 @click="type = 'STD'">standard</div>
-            <div class="box margin-box" :class="{ active: type === 'ABOUT' }"
-                 @click="type = 'ABOUT'">about</div>
-            <div class="box margin-box" :class="{ active: type === 'CONTACT' }"
-                 @click="type = 'CONTACT'">contact</div>
-            <div class="box margin-box" :class="{ active: published }"
-                 @click="published = !published">published</div>
+        <div class="btn-container">
+            <flex-button :active="type === 'STD'" :text="'standard'" @click-on="type = 'STD'"></flex-button>
+            <flex-button :active="type === 'ABOUT'" :marginLeft="true"
+                         :text="'about'" @click-on="type = 'ABOUT'"></flex-button>
+            <flex-button :active="type === 'CONTACT'" :marginLeft="true"
+                         :text="'contact'" @click-on="type = 'CONTACT'"></flex-button>
+            <flex-button :active="published" :marginLeft="true"
+                         :text="'published'" @click-on="published = !published"></flex-button>
             <div class="offset"></div>
-            <div v-if="!cactus._id" class="box important margin-box" @click="addCactus">add</div>
-            <div v-if="cactus._id" class="box important margin-box" @click="cancelEdit">cancel</div>
-            <div v-if="cactus._id" class="box important margin-box" @click="editCactus">edit</div>
+            <flex-button v-if="!cactus._id" :marginLeft="true" :text="'add'" @click-on="addCactus"></flex-button>
+            <flex-button v-if="cactus._id" :marginLeft="true" :text="'cancel'" @click-on="cancelEdit"></flex-button>
+            <flex-button v-if="cactus._id" :marginLeft="true" :text="'edit'" @click-on="editCactus"></flex-button>
         </div>
     </div>
 </template>
@@ -24,11 +23,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { http } from "@/http/http";
-import CommonButton from '@/components/CommonButton.vue'
+import FlexButton from '@/components/FlexButton.vue'
 
 @Component({
     components: {
-        CommonButton
+        FlexButton
     }
 })
 export default class Admin extends Vue {
@@ -85,9 +84,14 @@ export default class Admin extends Vue {
 </script>
 
 <style scoped lang="stylus">
+.title
+    color #494949
+    font-weight bold
+    padding 15px 0 20px 0
+
 .input-title
     color black
-    border: 2px solid black
+    border: 1px solid black
     padding 10px
     background #a5a5a5
     width calc(100% - 24px)
@@ -97,42 +101,16 @@ export default class Admin extends Vue {
     color black
     background #a5a5a5
     box-sizing border-box
-    border 2px solid black
+    border 1px solid black
     padding 10px
     width 100%
     height 170px
     resize none
 
-.box-container
+.btn-container
     display flex
-    margin 10px 0 20px 0
-    align-items center
     flex-wrap wrap
-
-.box
-    border: 1px solid #000000
-    padding 5px
-    margin 5px 0 5px 0
-    cursor pointer
-    &:hover:not(.active)
-        font-size 1.2em
-        background #3bafff
-        transition .3s
-
-.active
-    background #3bafff
-
-.important
-    font-weight bolder
-    &:hover
-        font-size 1.2em
-        background #4CAF50
-        transition .3s
 
 .offset
     flex-grow 1
-
-.margin-box
-    margin-left 5px
 </style>
-

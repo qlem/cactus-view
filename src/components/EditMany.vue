@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="main">
         <div>
-            <h4>Home</h4>
+            <div class="title-cat">Home</div>
             <div v-for="item in cactus" :key="item._id">
                 <compact-cactus v-if="item.type === 'STD'" :cactus="item"
                                 @update-type="updateType(item, $event)"
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div>
-            <h4>About</h4>
+            <div class="title-cat">About</div>
             <div v-for="item in cactus" :key="item._id">
                 <compact-cactus v-if="item.type === 'ABOUT'" :cactus="item"
                                 @update-type="updateType(item, $event)"
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div>
-            <h4>Contact</h4>
+            <div class="title-cat">Contact</div>
             <div v-for="item in cactus" :key="item._id">
                 <compact-cactus v-if="item.type === 'CONTACT'" :cactus="item"
                                 @update-type="updateType(item, $event)"
@@ -27,6 +27,7 @@
                                 @delete-cactus="deleteCactus(item._id)"></compact-cactus>
             </div>
         </div>
+        <div class="margin-bottom"></div>
     </div>
 </template>
 
@@ -91,5 +92,14 @@ export default class EditManyCactus extends Vue {
 </script>
 
 <style scoped lang="stylus">
+.main
+    padding-top 5px
 
+.title-cat
+    color #494949
+    font-weight bold
+    padding 20px 0 10px 0
+
+.margin-bottom
+    height 20px
 </style>

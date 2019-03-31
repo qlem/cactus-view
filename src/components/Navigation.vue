@@ -29,9 +29,9 @@ export default class Navigation extends Vue {
     align-items center
     text-decoration none
     &.active
-        background-color: #4CAF50
+        background #4CAF50
     &:hover:not(.active)
-        background-color: #111
+        background #111
 
 @media screen and (max-width: 600px)
     .link
