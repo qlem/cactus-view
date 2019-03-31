@@ -20,8 +20,7 @@ class Http {
             const response = await this.instance.post('/identification', user);
             return response.data.token
         } catch (e) {
-            console.error('Cannot proceed to identification');
-            console.error(e);
+            throw e
         }
     }
 
@@ -45,8 +44,7 @@ class Http {
             }
             return response.data;
         } catch (e) {
-            console.error('Cannot get cactus');
-            console.error(e)
+            throw e
         }
     }
 
@@ -56,8 +54,7 @@ class Http {
                 data: cactus
             });
         } catch (e) {
-            console.error('Cannot create a new cactus');
-            console.error(e)
+            throw e
         }
     }
 
@@ -67,8 +64,7 @@ class Http {
                 data: cactus
             });
         } catch (e) {
-            console.error('Cannot edit cactus');
-            console.error(e)
+            throw e
         }
     }
 
@@ -80,8 +76,7 @@ class Http {
                 }
             });
         } catch (e) {
-            console.error('Cannot delete cactus');
-            console.error(e);
+            throw e
         }
     }
 }
