@@ -18,7 +18,7 @@ export function setCookie(token: string, days: number) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     const exp: string = 'expires=' + date.toUTCString();
-    document.cookie = cookieName + token + ';' + exp;
+    document.cookie = cookieName + token + ';' + exp + '; path=/';
 }
 
 export function deleteCookie() {

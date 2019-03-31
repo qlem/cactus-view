@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <div class="button" :class="{ active: active,  'margin-left': marginLeft }"
+    <div class="flex-btn-container">
+        <div class="flex-button" :class="{ active: active,  'margin-left': marginLeft }"
              @click="$emit('click-on')">{{ text }}</div>
     </div>
 </template>
@@ -17,12 +17,12 @@ export default class CommonButton extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.container
+.flex-btn-container
     display flex
     height 50px
     align-items center
 
-.button
+.flex-button
     border: 1px solid black
     cursor pointer
     padding 5px 10px 5px 10px
