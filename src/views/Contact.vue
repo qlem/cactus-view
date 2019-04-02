@@ -1,8 +1,9 @@
 <template>
     <div>
         <h2>Contact</h2>
-        <div class="cactus-container" v-for="cactus in posts" :key="cactus._id">
-            <cactus-preview :cactus="cactus" @click.native="toDetails(cactus)"></cactus-preview>
+        <div class="cactus-container">
+            <cactus-preview v-for="cactus in posts" :key="cactus._id" :cactus="cactus"
+                            @click.native="toDetails(cactus)"></cactus-preview>
         </div>
         <div class="margin-bottom"></div>
     </div>
@@ -45,13 +46,8 @@ export default class Contact extends Vue {
 
 <style scoped lang="stylus">
 .cactus-container
-    position relative
-    background white
-    width calc(100% - 20px)
-    margin-bottom 20px
-    padding 10px
-    border-radius 2px
-    box-shadow 3px 3px 6px 0 rgba(0, 0, 0, 0.2), -3px -3px 6px 0 rgba(0, 0, 0, 0.2)
+    display flex
+    flex-wrap wrap
 
 .margin-bottom
     height 20px
