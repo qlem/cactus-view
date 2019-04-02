@@ -52,7 +52,7 @@ export default class CactusFullView extends Vue {
 <style scoped lang="stylus">
 .container
     display grid
-    grid-template-columns 20% auto 20%
+    grid-template-columns 15% auto 15%
     grid-template-rows min-height min-height min-height min-height min-height
     grid-template-areas "left title right" "left author right" "left body right" "left last-edited right" "left admin right"
 
@@ -82,5 +82,9 @@ export default class CactusFullView extends Vue {
     grid-area admin
     display flex
     margin-bottom 30px
+
+@media screen and (max-width: 1000px)
+    .container
+        grid-template-columns 5% auto 5%
 </style>
 
