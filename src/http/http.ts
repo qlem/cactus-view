@@ -10,7 +10,7 @@ class Http {
     // http://localhost:3000
     constructor() {
         this.instance = axios.create({
-            baseURL: 'http://localhost:3000',
+            baseURL: 'https://api.cactus.run',
             timeout: 1000,
         });
     }

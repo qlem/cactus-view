@@ -87,4 +87,3 @@ export default class CactusFullView extends Vue {
     .container
         grid-template-columns 5% auto 5%
 </style>
-
