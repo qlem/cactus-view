@@ -20,6 +20,14 @@ const ifNotAuth = (to: any, from: any, next: any) => {
     next()
 };
 
+const checkCactusParams = (to: any, from: any, next: any) => {
+    if (!to.params.cactus) {
+        next('/');
+        return
+    }
+    next()
+};
+
 const defaultProps = (route: any) => {
     if (!route.params.cactus) {
         return {
@@ -54,6 +62,13 @@ export default new Router({
             path: '/contact',
             name: 'contact',
             component: () => import(/* webpackChunkName: "cactus" */ './views/Contact.vue')
+        },
+        {
+            path: '/details',
+            name: 'details',
+            props: true,
+            component: () => import(/* webpackChunkName: "cactus" */ './views/Cactus.vue'),
+            beforeEnter: checkCactusParams
         },
         {
             path: '/admin',

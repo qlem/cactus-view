@@ -1,8 +1,8 @@
 <template>
     <div>
         <h2>Contact</h2>
-        <div class="cactus-container" v-for="item in cactus" :key="item._id">
-            <cactus :cactus="item" @cactus-deleted="getCactus"></cactus>
+        <div class="cactus-container" v-for="cactus in posts" :key="cactus._id">
+            <cactus-preview :cactus="cactus" @click.native="toDetails(cactus)"></cactus-preview>
         </div>
         <div class="margin-bottom"></div>
     </div>
@@ -10,27 +10,35 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import CactusPreview from '@/components/CactusPreview.vue';
 import { http } from "@/http/http";
-import CactusType from '@/http/cactusType'
-import Cactus from "@/components/Cactus.vue";
+import CactusType from "@/http/cactusType";
 
 @Component({
     components: {
-        Cactus
+        CactusPreview
     }
 })
 export default class Contact extends Vue {
-    private cactus: any = [];
+    private posts: any = [];
     async created() {
         await this.getCactus()
     }
     async getCactus() {
         try {
-            this.cactus = await http.getCactus(CactusType.CONTACT);
+            this.posts = await http.getCactus(CactusType.CONTACT);
         } catch (e) {
             console.error('Cannot get cactus');
             console.error(e)
         }
+    }
+    toDetails(cactus: any) {
+        this.$router.push({
+            name: 'details',
+            params: {
+                cactus: cactus
+            }
+        })
     }
 }
 </script>
